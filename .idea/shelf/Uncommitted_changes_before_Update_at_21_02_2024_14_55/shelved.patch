@@ -1,0 +1,86 @@
+Index: main.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/main.py b/main.py
+--- a/main.py	(revision b61297c7e8e4a3a463a93e59dc4f5171536a2b3d)
++++ b/main.py	(date 1708527278902)
+@@ -1,0 +1,76 @@
++from tkinter import Tk, BOTH, Canvas
++
++
++class Window:
++    def __init__(self, title, width, height):
++        self.title = title
++        self.__root = Tk()
++        self.__root.protocol("WM_DELETE_WINDOW", self.close)
++        self.canvas = Canvas(self.__root, width=width, height=height, background='white')
++        self.canvas.pack()
++        self.is_running = False
++
++    def redraw(self):
++        self.__root.update_idletasks()
++        self.__root.update()
++
++    def wait_for_close(self):
++        if not self.is_running:
++            self.is_running = True
++
++        while self.is_running:
++            self.redraw()
++
++    def close(self):
++        self.is_running = False
++
++    class Point:
++        def __init__(self, x, y):
++            self.x = x
++            self.y = y
++
++    class Line:
++        def __init__(self, point1, point2):
++            self.point1, self.point2 = point1, point2
++
++        def draw(self, canvas, fill_colour):
++            canvas.create_line(
++                self.point1.x, self.point1.y, self.point2.x, self.point2.y, fill=fill_colour, width=2
++            )
++            canvas.pack()
++
++    def draw_line(self, line, fill_colour):
++        line.draw(self.canvas, fill_colour)
++
++class Cell:
++    def __init__(self, x1, y1, x2, y2, window):
++        self.has_left_wall = True
++        self.has_right_wall = True
++        self.has_top_wall = True
++        self.has_bottom_wall = True
++        self._x1 = x1
++        self._y1 = y1
++        self._x2 = x2
++        self._y2 = y2
++        self._win = window
++
++
++
++
++
++
++
++win = Window("Maze Solver", 800, 600)
++
++#point1 = Window.Point(100, 100)
++#point2 = Window.Point(300, 100)
++#point3 = Window.Point(100, 300)
++#point4 = Window.Point(300, 300)
++
++#line1 = Window.Line(point1, point4)
++#line2 = Window.Line(point2, point3)
++
++#win.draw_line(line1, fill_colour='red')
++#win.draw_line(line2, fill_colour='red')
++
++win.wait_for_close()
+\ No newline at end of file
